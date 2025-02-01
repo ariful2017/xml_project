@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %} PDF to XML | Upload {% endblock %}
+
+{% block content %} 
+
+<h2>Upload PDF to Extract Transaction Reference</h2>
+
+    <!-- PDF Upload Form -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="pdf_file" required>
+        <button type="submit">Upload & Extract</button>
+    </form>
+
+    {% if extracted_lc_number is not None %}
+    
+    <h3>Extracted Data (Editable)</h3>
+
+    <!-- Editable Transaction Form -->
+    <form method="post" action="{% url 'save_transaction' %}">
+        {% csrf_token %}
+        {{ transaction_form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    {% endif %}
+
+
+{% endblock %}
